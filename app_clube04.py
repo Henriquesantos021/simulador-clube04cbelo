@@ -1,151 +1,225 @@
 import streamlit as st
-import pandas as pd
+import math
 from datetime import datetime, timedelta
 
 # --- CONFIGURAÇÃO DA PÁGINA ---
 st.set_page_config(page_title="Simulador Clube04 - Campo Belo", page_icon="🐾", layout="wide")
 
-# --- CABEÇALHO E BRANDING ---
-# Você deve substituir o link abaixo pelo link direto da sua logo hospedada (ex: Imgur, Dropbox)
-LOGO_URL = "data:image/png;base64,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" # <--- SUBSTITUA AQUI
+st.markdown("""
+    <style>
+        [data-testid="stSidebar"] {
+            background-color: #FF8A00; 
+        }
+        [data-testid="stSidebar"] * {
+            color: #FFFFFF !important; 
+        }
+        .stSelectbox label, .stNumberInput label, .stTextInput label, .stCheckbox label {
+            font-weight: bold;
+        }
+        div[data-testid="stExpander"] div[role="button"] p {
+            color: #FF8A00 !important;
+            font-weight: bold;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-col_logo, col_info = st.columns([1, 4])
+# URL da Logo (Para o WhatsApp e Menu)
+# Hospede a sua logo da primeira imagem no Imgur ou Poste no próprio GitHub para gerar um link direto e cole aqui:
+LOGO_URL = "https://www.kalaes.com.br/22/wp-content/uploads/2023/08/CB04LOGO.png" # <- Substitua pelo link da sua logo
 
-with col_logo:
-    try:
-        st.image(LOGO_URL, width=120)
-    except:
-        st.write("🐾 **CLUBE04**") # Fallback caso a imagem falhe
+# --- TABELAS DE PREÇOS REAIS DO CLUBE04 ---
+precos_banho = {
+    "Até 10kg": {"Curto": 85.0, "Médio": 99.0, "Longo": 99.0},
+    "Até 20kg": {"Curto": 105.0, "Médio": 139.0, "Longo": 139.0},
+    "Até 50kg": {"Curto": 149.0, "Médio": 179.0, "Longo": 179.0},
+    "Acima de 50kg": {"Curto": 239.0, "Médio": 279.0, "Longo": 279.0}
+}
 
-with col_info:
-    st.title("Simulador de Planos Clube04")
-    st.subheader("Unidade: **Campo Belo**")
-    st.markdown("[@clube04.campobelo](https://instagram.com/clube04.campobelo)", help="Abrir Instagram da Loja")
+precos_mascaras = {
+    "Senses/Detox": {"Até 10kg": 69.0, "Até 20kg": 79.0, "Até 50kg": 89.0, "Acima de 50kg": 109.0},
+    "Luxo/Máx. Volume/Liso Intenso": {"Até 10kg": 59.0, "Até 20kg": 69.0, "Até 50kg": 79.0, "Acima de 50kg": 99.0},
+    "Argan": {"Até 10kg": 49.0, "Até 20kg": 59.0, "Até 50kg": 69.0, "Acima de 50kg": 89.0},
+    "Matização": {"Até 10kg": 69.0, "Até 20kg": 79.0, "Até 50kg": 89.0, "Acima de 50kg": 99.0}
+}
+
+precos_adicionais = {
+    "Remoção de Pelos Mortos": {"Até 10kg": 79.0, "Até 20kg": 89.0, "Até 50kg": 99.0, "Acima de 50kg": 109.0},
+    "Tosa Higiênica": {"Até 10kg": 39.0, "Até 20kg": 49.0, "Até 50kg": 59.0, "Acima de 50kg": 69.0},
+    "Ozônio": {"Até 10kg": 39.0, "Até 20kg": 49.0, "Até 50kg": 59.0, "Acima de 50kg": 79.0},
+    "Desembolo": {"Até 10kg": 99.0, "Até 20kg": 149.0, "Até 50kg": 189.0, "Acima de 50kg": 299.0},
+    "Extra Soft": {"Até 10kg": 19.0, "Até 20kg": 29.0, "Até 50kg": 39.0, "Acima de 50kg": 49.0},
+    "X-treme (Limpeza Profunda)": {"Até 10kg": 39.0, "Até 20kg": 39.0, "Até 50kg": 39.0, "Acima de 50kg": 39.0}
+}
+
+# Preços base para itens de balcão (Ajuste conforme sua loja)
+preco_bravecto = 250.0 
+preco_pacote_tapete = 89.0 # Pacote com 30 unidades
+
+# --- BARRA LATERAL (INPUTS) ---
+st.sidebar.image(LOGO_URL, width=150)
+st.sidebar.markdown("### 👤 Atendimento")
+vendedor = st.sidebar.text_input("Nome do vendedor(a)")
+nome_tutor = st.sidebar.text_input("Nome do tutor(a)")
+nome_pet = st.sidebar.text_input("Nome do doguinho")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🐾 Perfil do Doguinho")
+porte = st.sidebar.selectbox("Porte do Doguinho", ["Até 10kg", "Até 20kg", "Até 50kg", "Acima de 50kg"])
+pelo = st.sidebar.selectbox("Tipo de pelo", ["Curto", "Médio", "Longo"])
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🛠️ Estrutura do Plano")
+pacote_opcoes = {"Unitário": 1, "4 unidades": 4, "12 unidades": 12, "24 unidades": 24, "48 unidades": 48}
+escolha_pacote = st.sidebar.selectbox("Pacote de Banhos", list(pacote_opcoes.keys()))
+qtd_banhos = pacote_opcoes[escolha_pacote]
+frequencia = st.sidebar.selectbox("Frequência", ["Semanal", "Quinzenal", "Mensal"])
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### ✨ 1) Extras: Beleza (Qtd)")
+
+# Coletor dinâmico de Extras
+selecao_mascaras = {}
+selecao_adicionais = {}
+
+with st.sidebar.expander("🧴 Selecionar Máscaras"):
+    for mascara in precos_mascaras.keys():
+        qtd = st.number_input(f"{mascara}", min_value=0, max_value=qtd_banhos, value=0, key=f"m_{mascara}")
+        if qtd > 0: selecao_mascaras[mascara] = qtd
+
+with st.sidebar.expander("✂️ Selecionar Adicionais"):
+    for adicional in precos_adicionais.keys():
+        qtd = st.number_input(f"{adicional}", min_value=0, max_value=qtd_banhos, value=0, key=f"a_{adicional}")
+        if qtd > 0: selecao_adicionais[adicional] = qtd
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🛒 2) Extras: Consumo")
+quer_bravecto = st.sidebar.checkbox("Incluir Bravecto?")
+tapetes_semana = st.sidebar.number_input("Tapete Higiênico (Unidades usadas por SEMANA)", min_value=0, max_value=50, value=0)
+
+# --- MOTOR DE CÁLCULO ---
+descontos_fixos = {1: 0.0, 4: 0.05, 12: 0.08, 24: 0.10, 48: 0.20}
+
+def calcular_simulacao(q_banhos, freq, sel_masc, sel_adic, flag_bravecto, tap_semana):
+    if freq == "Semanal": semanas_duracao = q_banhos
+    elif freq == "Quinzenal": semanas_duracao = q_banhos * 2
+    else: semanas_duracao = q_banhos * 4 # Mensal
+    
+    meses_duracao = semanas_duracao / 4
+    dias_duracao = semanas_duracao * 7
+    
+    q_bravecto = math.ceil(meses_duracao / 3) if flag_bravecto and meses_duracao > 0 else 0
+    total_tapetes_unidade = semanas_duracao * tap_semana
+    q_pacotes_tapete = math.ceil(total_tapetes_unidade / 30)
+
+    # Cálculo dos Banhos
+    valor_banho_un = precos_banho[porte][pelo]
+    total_banhos = valor_banho_un * q_banhos
+    
+    # Cálculo das Máscaras e Adicionais (Baseado no Porte)
+    total_mascaras = sum([qtd * precos_mascaras[item][porte] for item, qtd in sel_masc.items()])
+    total_adicionais = sum([qtd * precos_adicionais[item][porte] for item, qtd in sel_adic.items()])
+    total_beleza = total_mascaras + total_adicionais
+    
+    # Cálculo de Consumo
+    total_consumo = (q_bravecto * preco_bravecto) + (q_pacotes_tapete * preco_pacote_tapete)
+    
+    total_avulso = total_banhos + total_beleza + total_consumo
+    desc_percentual = descontos_fixos[q_banhos]
+    total_com_desconto = total_avulso * (1 - desc_percentual)
+    
+    return {
+        "avulso": total_avulso,
+        "final": total_com_desconto,
+        "economia": total_avulso - total_com_desconto,
+        "desc_perc": desc_percentual,
+        "q_bravecto": q_bravecto,
+        "q_tapetes": q_pacotes_tapete,
+        "meses": round(meses_duracao, 1),
+        "dias": dias_duracao,
+        "valor_banho_un": valor_banho_un
+    }
+
+plano_atual = calcular_simulacao(qtd_banhos, frequencia, selecao_mascaras, selecao_adicionais, quer_bravecto, tapetes_semana)
+
+# --- TELA PRINCIPAL ---
+st.title(f"🐾 Proposta de Bem-Estar: **{nome_pet or 'Doguinho'}** do(a) **{nome_tutor or 'Tutor(a)'}**")
+st.markdown(f"**Atendimento:** {vendedor or 'Equipe Clube04'} | **Unidade:** Campo Belo")
+st.markdown("---")
+
+st.header("📊 Comparativo de Valor")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Preço Avulso (Sem Desconto)", f"R$ {plano_atual['avulso']:.2f}")
+
+with col2:
+    st.metric(
+        f"Preço CLUBE04 ({int(plano_atual['desc_perc']*100)}% OFF)", 
+        f"R$ {plano_atual['final']:.2f}", 
+        delta=f"- R$ {plano_atual['economia']:.2f} economizados!"
+    )
+
+with col3:
+    if qtd_banhos > 1:
+        economia_mes = plano_atual['economia'] / (plano_atual['meses'] if plano_atual['meses'] > 0 else 1)
+        st.metric("Economia Média por Mês", f"R$ {economia_mes:.2f}")
+    else:
+        st.metric("Economia", "R$ 0,00 (Plano Unitário)")
+
+# --- MOTOR DE UPSELL ---
+niveis = [1, 4, 12, 24, 48]
+indice_atual = niveis.index(qtd_banhos)
+
+if indice_atual < len(niveis) - 1:
+    proximo_nivel = niveis[indice_atual + 1]
+    plano_upsell = calcular_simulacao(proximo_nivel, frequencia, selecao_mascaras, selecao_adicionais, quer_bravecto, tapetes_semana)
+    desc_upsell = int(plano_upsell['desc_perc'] * 100)
+    
+    st.success(f"🚀 **Oportunidade de Ouro:** Se você levar o pacote de **{proximo_nivel} unidades**, seu desconto sobe para **{desc_upsell}%** em TODOS os itens (banho, beleza e consumo) e você economiza um total de **R$ {plano_upsell['economia']:.2f}**!")
 
 st.markdown("---")
 
-# --- CONEXÃO COM GOOGLE SHEETS ---
-# Substitua pela URL da sua planilha 'Pública na Web'
-sheet_url = "https://docs.google.com/spreadsheets/d/SUA_PLANILHA_ID_AQUI/export?format=csv" # <--- SUBSTITUA AQUI
+# --- RESUMO WHATSAPP ---
+st.subheader("📱 Resumo para Envio")
+if st.checkbox("Montar Resumo para o WhatsApp"):
+    with st.container(border=True):
+        col_logo, col_texto = st.columns([1, 4])
+        with col_logo:
+            try:
+                st.image(LOGO_URL, width=80)
+            except:
+                pass
+        with col_texto:
+            st.markdown(f"### CLUBE04 - Unidade Campo Belo")
+            st.markdown(f"**Proposta exclusiva para o(a) {nome_pet}**")
+            
+        # Formatando listas de extras
+        lista_masc = [f"{qtd}x {item} (R$ {precos_mascaras[item][porte]:.2f}/un)" for item, qtd in selecao_mascaras.items()]
+        lista_adic = [f"{qtd}x {item} (R$ {precos_adicionais[item][porte]:.2f}/un)" for item, qtd in selecao_adicionais.items()]
+        todos_extras = lista_masc + lista_adic
+        texto_extras = "\n- ".join(todos_extras) if todos_extras else "Nenhum"
+        
+        texto_consumo = []
+        if plano_atual['q_bravecto'] > 0: texto_consumo.append(f"{plano_atual['q_bravecto']}x Bravecto(s) (Cobertura do período)")
+        if plano_atual['q_tapetes'] > 0: texto_consumo.append(f"{plano_atual['q_tapetes']}x Pct Tapete Higiênico (30 un/cada)")
+        texto_consumo_str = "\n- ".join(texto_consumo) if texto_consumo else "Nenhum"
 
-@st.cache_data(ttl=600) # Mantém os preços em cache por 10 minutos
-def load_data(url, worksheet_name):
-    # Gambiarra para ler abas específicas via CSV export
-    # Requer que você obtenha o gid=ID_DA_ABA na URL do Sheets
-    return pd.read_csv(url) 
-
-# Para simplicidade deste código, vamos assumir os preços direto aqui. 
-# Para usar GSheets, requer configuração de secrets que é mais avançada.
-# Vamos usar dados de exemplo baseados na estrutura que desenhei antes.
-
-df_precos_base = pd.DataFrame([
-    {"Porte": "Até 10kg", "Pelo": "Curto", "Preco": 89.00},
-    {"Porte": "Até 10kg", "Pelo": "Médio / Longo", "Preco": 99.00},
-    {"Porte": "Até 20kg", "Pelo": "Curto", "Preco": 149.00},
-    {"Porte": "Até 50kg", "Pelo": "Curto", "Preco": 179.00}
-])
-
-dict_extras = {"Hidratação": 45.00, "Tosa Higiênica": 35.00, "Remoção Pelo Morto": 50.00}
-dict_produtos = {"Bravecto 10-20kg": 220.00, "Tapete higiênico": 85.00}
-
-# --- BARRA LATERAL (INPUTS DO VENDEDOR) ---
-st.sidebar.header("📝 Dados do Atendimento")
-nome_pet = st.sidebar.text_input("Nome do Pet", value="Nome")
-whatsapp = st.sidebar.text_input("WhatsApp do Tutor (Opcional)")
-
-st.sidebar.markdown("---")
-st.sidebar.header("🛠️ Configuração do Pacote")
-
-# Seleção do Banho Base
-porte = st.sidebar.selectbox("Porte", df_precos_base["Porte"].unique())
-pelo = st.sidebar.selectbox("Tipo de Pelo", df_precos_base[df_precos_base["Porte"] == porte]["Pelo"].unique())
-
-# Frequência e Duração
-qtd_banhos = st.sidebar.number_input("Quantidade de Banhos no Plano", min_value=1, value=4, step=1)
-frequencia = st.sidebar.selectbox("Frequência", ["Semanal", "Quinzenal", "Mensal"])
-
-# Extras e Produtos
-extras_selecionados = st.sidebar.multiselect("Serviços Extras (Adicionar no plano)", list(dict_extras.keys()))
-produtos_selecionados = st.sidebar.multiselect("Produtos (Itens de Balcão)", list(dict_produtos.keys()))
-
-st.sidebar.markdown("---")
-desconto_clube = st.sidebar.slider("Desconto Especial Clube04 (%)", min_value=0, max_value=30, value=15, step=5)
-
-# --- CÁLCULOS LOGÍSTICOS E FINANCEIROS ---
-
-# 1. Recuperar Preço Base (PROCV)
-row = df_precos_base[(df_precos_base["Porte"] == porte) & (df_precos_base["Pelo"] == pelo)]
-preco_banho_unitario = row["Preco"].values[0]
-
-# 2. Somar Extras Unitários
-preco_extras_unitario = sum([dict_extras[item] for item in extras_selecionados])
-total_servicos_unitario = preco_banho_unitario + preco_extras_unitario
-
-# 3. Calcular Totais Avulsos (Sem Desconto)
-total_servicos_avulso = total_servicos_unitario * qtd_banhos
-total_produtos = sum([dict_produtos[item] for item in produtos_selecionados])
-preco_total_avulso = total_servicos_avulso + total_produtos
-
-# 4. Calcular Totais Clube04 (Com Desconto nos SERVIÇOS)
-total_servicos_clube = total_servicos_avulso * (1 - (desconto_clube / 100))
-preco_total_clube = total_servicos_clube + total_produtos
-
-# 5. Cálculo de Duração
-dias_frequencia = {"Semanal": 7, "Quinzenal": 14, "Mensal": 30}
-total_dias = (qtd_banhos - 1) * dias_frequencia[frequencia]
-data_final = datetime.now() + timedelta(days=total_dias)
-meses_duracao = round(total_dias / 30, 1)
-
-# --- TELA PRINCIPAL (O PITCH DE VENDA) ---
-st.header(f"Proposta de Bem-Estar: **{nome_pet}**")
-
-# Container customizado para o print
-with st.container(border=True):
-    st.markdown(f"""
-    <div style="background-color:#f9f9f9; padding:15px; border-radius:10px; border: 1px solid #ddd">
-        <h3 style="margin-top:0">📊 Comparativo de Valor</h3>
-        <p style="margin-bottom:5px">Plano de {qtd_banhos} banhos ({frequencia}) + {len(extras_selecionados)} Extras + {len(produtos_selecionados)} Produtos.</p>
-    </div>
-    """, unsafe_allow_html=True)
-    st.write("")
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.metric(label="Preço Avulso (Normal)", value=f"R$ {preco_total_avulso:.2f}")
-
-    with col2:
-        # Mostra o desconto de forma agressiva
-        st.metric(
-            label=f"Preço no Pacote do CLUBE04 ({desconto_clube}% off)", 
-            value=f"R$ {preco_total_clube:.2f}", 
-            delta=f"-{preco_total_avulso - preco_total_clube:.2f} economizados"
-        )
-
-    with col3:
-        # Argumento RevOps: Economia por Banho
-        economia_banho = (total_servicos_avulso - total_servicos_clube) / qtd_banhos
-        st.metric(label="Economia POR BANHO", value=f"R$ {economia_banho:.2f}")
-
-    st.markdown("---")
-    st.subheader("🕒 Duração e Planejamento")
-    c1, c2, c3 = st.columns([1,1,1])
-    c1.info(f"🗓️ Duração total: **{total_dias} dias** (~{meses_duracao} meses)")
-    c2.info(f"📅 Término estimado: **{data_final.strftime('%d/%m/%Y')}**")
-    c3.success(f"💡 Você trava o preço de hoje por {meses_duracao} meses!")
-
-    # Área de resumo para print limpo
-    if st.checkbox("Gerar Resumo para Screenshot"):
-        st.markdown("---")
         st.markdown(f"""
-        **🛒 Resumo do Plano Clube04 - {nome_pet}**
-        - **Serviço Base:** {qtd_banhos} Banhos ({porte}/{pelo}) - {frequencia}
-        - **Incluso:** {', '.join(extras_selecionados) if extras_selecionados else 'Apenas Banho'}
-        - **Produtos:** {', '.join(produtos_selecionados) if produtos_selecionados else 'Nenhum'}
+        **📋 Detalhes do Plano:**
+        - **Banhos:** {qtd_banhos} unidades ({porte} - Pelo {pelo})
+        - **Valor Base do Banho:** R$ {plano_atual['valor_banho_un']:.2f}
+        - **Frequência:** {frequencia}
+        - **Duração Estimada:** {plano_atual['meses']} meses ({plano_atual['dias']} dias)
+        
+        **✨ Extras de Beleza Inclusos:**
+        - {texto_extras}
+        
+        **🛒 Consumo Incluso:**
+        - {texto_consumo_str}
+        
         ---
-        - ❌ Preço total avulso: ~~R$ {preco_total_avulso:.2f}~~
-        - ✅ **Preço Clube04 hoje: R$ {preco_total_clube:.2f}**
-        - 🔥 **Duração:** {total_dias} dias ({meses_duracao} meses)
-        ---
-        *Atendimento Unidade Campo Belo.*
+        ❌ Valor Avulso (Sem Clube): ~~R$ {plano_atual['avulso']:.2f}~~
+        ✅ **Valor no CLUBE04: R$ {plano_atual['final']:.2f}** *(Desconto aplicado de {int(plano_atual['desc_perc']*100)}%)*
+        
+        *Atendente: {vendedor}*
         """)
