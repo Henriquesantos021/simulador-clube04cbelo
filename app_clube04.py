@@ -20,40 +20,63 @@ st.markdown("""
             color: #FF8A00 !important;
             font-weight: bold;
         }
+        .reference-text {
+            color: #555;
+            font-size: 0.9em;
+            font-style: italic;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 # URL da Logo (Para o WhatsApp e Menu)
-# Hospede a sua logo da primeira imagem no Imgur ou Poste no próprio GitHub para gerar um link direto e cole aqui:
-LOGO_URL = "https://www.kalaes.com.br/22/wp-content/uploads/2023/08/CB04LOGO.png" # <- Substitua pelo link da sua logo
+LOGO_URL = "https://www.kalaes.com.br/22/wp-content/uploads/2023/08/CB04LOGO.png" # <- Substitua pelo link da sua logo real
 
-# --- TABELAS DE PREÇOS REAIS DO CLUBE04 ---
-precos_banho = {
-    "Até 10kg": {"Curto": 85.0, "Médio": 99.0, "Longo": 99.0},
-    "Até 20kg": {"Curto": 105.0, "Médio": 139.0, "Longo": 139.0},
-    "Até 50kg": {"Curto": 149.0, "Médio": 179.0, "Longo": 179.0},
-    "Acima de 50kg": {"Curto": 239.0, "Médio": 279.0, "Longo": 279.0}
+# --- TABELAS DE PREÇOS UNITÁRIOS REAIS DO CLUBE04 (AVULSO) ---
+
+# Tabela 1: Banhos (Avulso Unitário) - image_2.png
+# Atualizado com nomes de peso exatos
+precos_banho_avulso = {
+    "Até 10 kg": {"Curto": 85.0, "Médio": 99.0, "Longo": 99.0},
+    "Até 20 kg": {"Curto": 105.0, "Médio": 139.0, "Longo": 139.0},
+    "Até 50 kg": {"Curto": 149.0, "Médio": 179.0, "Longo": 179.0},
+    "+ 50 kg": {"Curto": 239.0, "Médio": 279.0, "Longo": 279.0}
 }
 
-precos_mascaras = {
-    "Senses/Detox": {"Até 10kg": 69.0, "Até 20kg": 79.0, "Até 50kg": 89.0, "Acima de 50kg": 109.0},
-    "Luxo/Máx. Volume/Liso Intenso": {"Até 10kg": 59.0, "Até 20kg": 69.0, "Até 50kg": 79.0, "Acima de 50kg": 99.0},
-    "Argan": {"Até 10kg": 49.0, "Até 20kg": 59.0, "Até 50kg": 69.0, "Acima de 50kg": 89.0},
-    "Matização": {"Até 10kg": 69.0, "Até 20kg": 79.0, "Até 50kg": 89.0, "Acima de 50kg": 99.0}
+# Tabela 1: Tosa (Avulso Unitário - Tabela de Base) - image_2.png
+# Tratada como extra, aplicando o desconto geral do pacote escolhido
+precos_tosa_avulso = {
+    "Até 10 kg": 209.0,
+    "Até 20 kg": 279.0,
+    "Até 50 kg": 489.0,
+    "+ 50 kg": 699.0
 }
 
-precos_adicionais = {
-    "Remoção de Pelos Mortos": {"Até 10kg": 79.0, "Até 20kg": 89.0, "Até 50kg": 99.0, "Acima de 50kg": 109.0},
-    "Tosa Higiênica": {"Até 10kg": 39.0, "Até 20kg": 49.0, "Até 50kg": 59.0, "Acima de 50kg": 69.0},
-    "Ozônio": {"Até 10kg": 39.0, "Até 20kg": 49.0, "Até 50kg": 59.0, "Acima de 50kg": 79.0},
-    "Desembolo": {"Até 10kg": 99.0, "Até 20kg": 149.0, "Até 50kg": 189.0, "Acima de 50kg": 299.0},
-    "Extra Soft": {"Até 10kg": 19.0, "Até 20kg": 29.0, "Até 50kg": 39.0, "Acima de 50kg": 49.0},
-    "X-treme (Limpeza Profunda)": {"Até 10kg": 39.0, "Até 20kg": 39.0, "Até 50kg": 39.0, "Acima de 50kg": 39.0}
+# Tabela 2: Máscaras (Avulso Unitário) - image_3.png
+precos_mascaras_avulso = {
+    "Senses/Detox": {"Até 10 kg": 69.0, "Até 20 kg": 79.0, "Até 50 kg": 89.0, "+ 50 kg": 109.0},
+    "Luxo/Máx. Volume/Liso Intenso": {"Até 10 kg": 59.0, "Até 20 kg": 69.0, "Até 50 kg": 79.0, "+ 50 kg": 99.0},
+    "Argan": {"Até 10 kg": 49.0, "Até 20 kg": 59.0, "Até 50 kg": 69.0, "+ 50 kg": 89.0},
+    "Matização": {"Até 10 kg": 69.0, "Até 20 kg": 79.0, "Até 50 kg": 89.0, "+ 50 kg": 99.0}
 }
 
-# Preços base para itens de balcão (Ajuste conforme sua loja)
-preco_bravecto = 250.0 
-preco_pacote_tapete = 89.0 # Pacote com 30 unidades
+# Tabela 2: Adicionais (Avulso Unitário) - image_3.png
+precos_adicionais_avulso = {
+    "Remoção de Pelos Mortos": {"Até 10 kg": 79.0, "Até 20 kg": 89.0, "Até 50 kg": 99.0, "+ 50 kg": 109.0},
+    "Tosa Higiênica": {"Até 10 kg": 39.0, "Até 20 kg": 49.0, "Até 50 kg": 59.0, "+ 50 kg": 69.0},
+    "Ozônio": {"Até 10 kg": 39.0, "Até 20 kg": 49.0, "Até 50 kg": 59.0, "+ 50 kg": 79.0},
+    "Desembolo": {"Até 10 kg": 99.0, "Até 20 kg": 149.0, "Até 50 kg": 189.0, "+ 50 kg": 299.0},
+    "Extra Soft": {"Até 10 kg": 19.0, "Até 20 kg": 29.0, "Até 50 kg": 39.0, "+ 50 kg": 49.0},
+    "X-treme (Limpeza Profunda)": {"Até 10 kg": 39.0, "Até 20 kg": 39.0, "Até 50 kg": 39.0, "+ 50 kg": 39.0}
+}
+
+# Tabela 3: Bravecto (Avulso Unitário) - image_4.png
+# Atualizado com nomes de peso exatos da planilha
+precos_bravecto_avulso = {
+    "4.5 - 10 kg": 238.90,
+    "10 - 20 kg": 294.90,
+    "20 - 40 kg": 352.90,
+    "40 - 56 kg": 344.90
+}
 
 # --- BARRA LATERAL (INPUTS) ---
 st.sidebar.image(LOGO_URL, width=150)
@@ -64,12 +87,13 @@ nome_pet = st.sidebar.text_input("Nome do doguinho")
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🐾 Perfil do Doguinho")
-porte = st.sidebar.selectbox("Porte do Doguinho", ["Até 10kg", "Até 20kg", "Até 50kg", "Acima de 50kg"])
+porte = st.sidebar.selectbox("Porte do Doguinho", list(precos_banho_avulso.keys()))
 pelo = st.sidebar.selectbox("Tipo de pelo", ["Curto", "Médio", "Longo"])
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🛠️ Estrutura do Plano")
-pacote_opcoes = {"Unitário": 1, "4 unidades": 4, "12 unidades": 12, "24 unidades": 24, "48 unidades": 48}
+# Atualizado conforme image_2.png
+pacote_opcoes = {"Unitário": 1, "4 unidades": 4, "8 unidades": 8, "12 unidades": 12, "24 unidades": 24, "48 unidades": 48}
 escolha_pacote = st.sidebar.selectbox("Pacote de Banhos", list(pacote_opcoes.keys()))
 qtd_banhos = pacote_opcoes[escolha_pacote]
 frequencia = st.sidebar.selectbox("Frequência", ["Semanal", "Quinzenal", "Mensal"])
@@ -82,24 +106,30 @@ selecao_mascaras = {}
 selecao_adicionais = {}
 
 with st.sidebar.expander("🧴 Selecionar Máscaras"):
-    for mascara in precos_mascaras.keys():
+    for mascara in precos_mascaras_avulso.keys():
         qtd = st.number_input(f"{mascara}", min_value=0, max_value=qtd_banhos, value=0, key=f"m_{mascara}")
         if qtd > 0: selecao_mascaras[mascara] = qtd
 
 with st.sidebar.expander("✂️ Selecionar Adicionais"):
-    for adicional in precos_adicionais.keys():
+    # Inclui a Tosa Geral como Adicional dinâmico
+    for adicional in list(precos_adicionais_avulso.keys()) + ["Tosa Geral"]:
         qtd = st.number_input(f"{adicional}", min_value=0, max_value=qtd_banhos, value=0, key=f"a_{adicional}")
         if qtd > 0: selecao_adicionais[adicional] = qtd
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🛒 2) Extras: Consumo")
 quer_bravecto = st.sidebar.checkbox("Incluir Bravecto?")
-tapetes_semana = st.sidebar.number_input("Tapete Higiênico (Unidades usadas por SEMANA)", min_value=0, max_value=50, value=0)
+if quer_bravecto:
+    peso_bravecto = st.sidebar.selectbox("Peso para Bravecto", list(precos_bravecto_avulso.keys()))
+else:
+    peso_bravecto = None
 
-# --- MOTOR DE CÁLCULO ---
-descontos_fixos = {1: 0.0, 4: 0.05, 12: 0.08, 24: 0.10, 48: 0.20}
+# --- MOTOR DE CÁLCULO E LOGÍSTICA ---
+# Estrutura de descontos fixos conforme image_2.png
+descontos_fixos = {1: 0.0, 4: 0.05, 8: 0.07, 12: 0.10, 24: 0.15, 48: 0.20}
 
-def calcular_simulacao(q_banhos, freq, sel_masc, sel_adic, flag_bravecto, tap_semana):
+def calcular_simulacao(q_banhos, freq, sel_masc, sel_adic, p_bravecto_peso):
+    # Duração
     if freq == "Semanal": semanas_duracao = q_banhos
     elif freq == "Quinzenal": semanas_duracao = q_banhos * 2
     else: semanas_duracao = q_banhos * 4 # Mensal
@@ -107,39 +137,61 @@ def calcular_simulacao(q_banhos, freq, sel_masc, sel_adic, flag_bravecto, tap_se
     meses_duracao = semanas_duracao / 4
     dias_duracao = semanas_duracao * 7
     
-    q_bravecto = math.ceil(meses_duracao / 3) if flag_bravecto and meses_duracao > 0 else 0
-    total_tapetes_unidade = semanas_duracao * tap_semana
-    q_pacotes_tapete = math.ceil(total_tapetes_unidade / 30)
+    # Consumo
+    q_bravecto = math.ceil(meses_duracao / 3) if p_bravecto_peso and meses_duracao > 0 else 0
 
-    # Cálculo dos Banhos
-    valor_banho_un = precos_banho[porte][pelo]
-    total_banhos = valor_banho_un * q_banhos
+    # 1. Recuperar Preços Unitários Padrão (Avulso)
+    banho_avulso_un = precos_banho_avulso[porte][pelo]
+    tosa_avulso_un = precos_tosa_avulso[porte] if "Tosa Geral" in sel_adic else 0.0
+    bravecto_avulso_un = precos_bravecto_avulso[p_bravecto_peso] if p_bravecto_peso else 0.0
+
+    # 2. Formação do Valor Avulso Padrão (Sem Desconto)
+    total_banhos_avulso_padrao = banho_avulso_un * q_banhos
     
     # Cálculo das Máscaras e Adicionais (Baseado no Porte)
-    total_mascaras = sum([qtd * precos_mascaras[item][porte] for item, qtd in sel_masc.items()])
-    total_adicionais = sum([qtd * precos_adicionais[item][porte] for item, qtd in sel_adic.items()])
-    total_beleza = total_mascaras + total_adicionais
+    total_mascaras_avulso_padrao = sum([qtd * precos_mascaras_avulso[item][porte] for item, qtd in sel_masc.items()])
     
-    # Cálculo de Consumo
-    total_consumo = (q_bravecto * preco_bravecto) + (q_pacotes_tapete * preco_pacote_tapete)
+    # Adicionais normais + Tosa Geral
+    adic_normal = sum([qtd * precos_adicionais_avulso[item][porte] for item, qtd in sel_adic.items() if item != "Tosa Geral"])
+    qtd_tosa_geral = sel_adic["Tosa Geral"] if "Tosa Geral" in sel_adic else 0
+    adic_tosa_geral = qtd_tosa_geral * tosa_avulso_un
+    total_adicionais_avulso_padrao = adic_normal + adic_tosa_geral
     
-    total_avulso = total_banhos + total_beleza + total_consumo
+    total_beleza_avulso_padrao = total_mascaras_avulso_padrao + total_adicionais_avulso_padrao
+    total_consumo_avulso_padrao = q_bravecto * bravecto_avulso_un
+    
+    # TOTAL GERAL AVULSO (Tabela Padrão como referência)
+    total_avulso_geral = total_banhos_avulso_padrao + total_beleza_avulso_padrao + total_consumo_avulso_padrao
+    
+    # 3. Formação do Valor Clube04 (Aplicando Desconto Fixo em TUDO)
     desc_percentual = descontos_fixos[q_banhos]
-    total_com_desconto = total_avulso * (1 - desc_percentual)
     
+    total_com_desconto = total_avulso_geral * (1 - desc_percentual)
+    
+    # 4. Preços Unitários e Totais Detalhados (Para referência Padrão vs Clube)
     return {
-        "avulso": total_avulso,
-        "final": total_com_desconto,
-        "economia": total_avulso - total_com_desconto,
+        "avulso_un": banho_avulso_un,
+        "banho_clube_un": banho_avulso_un * (1 - desc_percentual),
+        "total_avulso_apenas_banhos": total_banhos_avulso_padrao,
+        "total_clube_apenas_banhos": total_banhos_avulso_padrao * (1 - desc_percentual),
+        
+        "total_avulso_geral": total_avulso_geral,
+        "total_clube_geral": total_com_desconto,
+        "economia": total_avulso_geral - total_com_desconto,
         "desc_perc": desc_percentual,
+        
         "q_bravecto": q_bravecto,
-        "q_tapetes": q_pacotes_tapete,
+        "bravecto_avulso_un": bravecto_avulso_un,
+        "bravecto_clube_un": bravecto_avulso_un * (1 - desc_percentual),
+        "total_avulso_apenas_consumo": total_consumo_avulso_padrao,
+        
+        "total_avulso_apenas_beleza": total_beleza_avulso_padrao,
+        
         "meses": round(meses_duracao, 1),
-        "dias": dias_duracao,
-        "valor_banho_un": valor_banho_un
+        "dias": dias_duracao
     }
 
-plano_atual = calcular_simulacao(qtd_banhos, frequencia, selecao_mascaras, selecao_adicionais, quer_bravecto, tapetes_semana)
+plano_atual = calcular_simulacao(qtd_banhos, frequencia, selecao_mascaras, selecao_adicionais, peso_bravecto)
 
 # --- TELA PRINCIPAL ---
 st.title(f"🐾 Proposta de Bem-Estar: **{nome_pet or 'Doguinho'}** do(a) **{nome_tutor or 'Tutor(a)'}**")
@@ -150,12 +202,12 @@ st.header("📊 Comparativo de Valor")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric("Preço Avulso (Sem Desconto)", f"R$ {plano_atual['avulso']:.2f}")
+    st.metric("Tabela Padrão (Sem Desconto)", f"R$ {plano_atual['total_avulso_geral']:.2f}")
 
 with col2:
     st.metric(
         f"Preço CLUBE04 ({int(plano_atual['desc_perc']*100)}% OFF)", 
-        f"R$ {plano_atual['final']:.2f}", 
+        f"R$ {plano_atual['total_clube_geral']:.2f}", 
         delta=f"- R$ {plano_atual['economia']:.2f} economizados!"
     )
 
@@ -167,15 +219,69 @@ with col3:
         st.metric("Economia", "R$ 0,00 (Plano Unitário)")
 
 # --- MOTOR DE UPSELL ---
-niveis = [1, 4, 12, 24, 48]
-indice_atual = niveis.index(qtd_banhos)
+niveis = [1, 4, 8, 12, 24, 48] # Atualizado conforme image_2.png
+try:
+    indice_atual = niveis.index(qtd_banhos)
+except ValueError:
+    indice_atual = len(niveis) # Caso seja unitário e não tenha próximo pacote
 
 if indice_atual < len(niveis) - 1:
     proximo_nivel = niveis[indice_atual + 1]
-    plano_upsell = calcular_simulacao(proximo_nivel, frequencia, selecao_mascaras, selecao_adicionais, quer_bravecto, tapetes_semana)
+    plano_upsell = calcular_simulacao(proximo_nivel, frequencia, selecao_mascaras, selecao_adicionais, peso_bravecto)
     desc_upsell = int(plano_upsell['desc_perc'] * 100)
     
     st.success(f"🚀 **Oportunidade de Ouro:** Se você levar o pacote de **{proximo_nivel} unidades**, seu desconto sobe para **{desc_upsell}%** em TODOS os itens (banho, beleza e consumo) e você economiza um total de **R$ {plano_upsell['economia']:.2f}**!")
+
+st.markdown("---")
+
+# --- DETALHAMENTO DA REFERÊNCIA PADRÃO ---
+st.subheader("🏁 Detalhamento (Padrão vs. Clube04)")
+st.markdown(f"Planos Clube04 são calculados com base na nossa tabela de preços unitários avulsos.")
+
+# Resumo exemplificado conforme solicitação do usuário
+st.markdown(f"""
+<div style="background-color:#fef6eb; padding:15px; border-radius:10px; border: 1px solid #FF8A00">
+    <h4 style="margin-top:0">Exemplo de Cálculo: Banhos</h4>
+    <p style="margin-bottom:0px" class="reference-text">
+        Pacote {qtd_banhos}x Banho ({porte}/{pelo}) - unitário R$ {plano_atual['avulso_un']:.2f} e total sem desconto R$ {plano_atual['total_avulso_apenas_banhos']:.2f}.
+    </p>
+    <p style="margin-bottom:0px">
+        ✅ <b>No pacote Clube04 fica:</b> desconto de {int(plano_atual['desc_perc']*100)}%, saindo por <b>R$ {plano_atual['banho_clube_un']:.2f} unitário</b> e <b>R$ {plano_atual['total_clube_apenas_banhos']:.2f} no total</b>.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+st.write("")
+
+# Expander detalhando tudo
+with st.expander("Clique para ver o detalhamento completo de Extras & Consumo"):
+    # Detalhamento de Beleza
+    if plano_atual["total_avulso_apenas_beleza"] > 0:
+        st.markdown("**Extras de Beleza (Matérias-Primas e Adicionais):**")
+        
+        for item, qtd in selecao_mascaras.items():
+            avulso_un = precos_mascaras_avulso[item][porte]
+            desc_percentual = plano_atual['desc_perc']
+            clube_un = avulso_un * (1 - desc_percentual)
+            st.markdown(f"- {qtd}x {item}: Un. Padrão R$ {avulso_un:.2f} ➔ **Un. Clube04 R$ {clube_un:.2f}**")
+            
+        for item, qtd in selecao_adicionais.items():
+            if item == "Tosa Geral":
+                avulso_un = precos_tosa_avulso[porte]
+            else:
+                avulso_un = precos_adicionais_avulso[item][porte]
+            
+            desc_percentual = plano_atual['desc_perc']
+            clube_un = avulso_un * (1 - desc_percentual)
+            st.markdown(f"- {qtd}x {item}: Un. Padrão R$ {avulso_un:.2f} ➔ **Un. Clube04 R$ {clube_un:.2f}**")
+            
+        st.write("")
+        
+    # Detalhamento de Consumo
+    if plano_atual["total_avulso_apenas_consumo"] > 0:
+        st.markdown("**Consumo (Medicamentos):**")
+        
+        st.markdown(f"- {plano_atual['q_bravecto']}x Bravecto ({peso_bravecto}): Un. Padrão R$ {plano_atual['bravecto_avulso_un']:.2f} ➔ **Un. Clube04 R$ {plano_atual['bravecto_clube_un']:.2f}**")
+        st.write("")
 
 st.markdown("---")
 
@@ -193,33 +299,44 @@ if st.checkbox("Montar Resumo para o WhatsApp"):
             st.markdown(f"### CLUBE04 - Unidade Campo Belo")
             st.markdown(f"**Proposta exclusiva para o(a) {nome_pet}**")
             
-        # Formatando listas de extras
-        lista_masc = [f"{qtd}x {item} (R$ {precos_mascaras[item][porte]:.2f}/un)" for item, qtd in selecao_mascaras.items()]
-        lista_adic = [f"{qtd}x {item} (R$ {precos_adicionais[item][porte]:.2f}/un)" for item, qtd in selecao_adicionais.items()]
+        # Formatando listas de extras para o resumo
+        lista_masc = []
+        for item, qtd in selecao_mascaras.items():
+            avulso_un = precos_mascaras_avulso[item][porte]
+            lista_masc.append(f"{qtd}x {item} (avulso un. R$ {avulso_un:.2f})")
+            
+        lista_adic = []
+        for item, qtd in selecao_adicionais.items():
+            if item == "Tosa Geral":
+                avulso_un = precos_tosa_avulso[porte]
+            else:
+                avulso_un = precos_adicionais_avulso[item][porte]
+            lista_adic.append(f"{qtd}x {item} (avulso un. R$ {avulso_un:.2f})")
+            
         todos_extras = lista_masc + lista_adic
         texto_extras = "\n- ".join(todos_extras) if todos_extras else "Nenhum"
         
         texto_consumo = []
-        if plano_atual['q_bravecto'] > 0: texto_consumo.append(f"{plano_atual['q_bravecto']}x Bravecto(s) (Cobertura do período)")
-        if plano_atual['q_tapetes'] > 0: texto_consumo.append(f"{plano_atual['q_tapetes']}x Pct Tapete Higiênico (30 un/cada)")
+        if plano_atual['q_bravecto'] > 0: 
+            texto_consumo.append(f"{plano_atual['q_bravecto']}x Bravecto ({peso_bravecto} | avulso un. R$ {plano_atual['bravecto_avulso_un']:.2f})")
         texto_consumo_str = "\n- ".join(texto_consumo) if texto_consumo else "Nenhum"
 
         st.markdown(f"""
-        **📋 Detalhes do Plano:**
+        **📋 Detalhes do Plano Clube04:**
         - **Banhos:** {qtd_banhos} unidades ({porte} - Pelo {pelo})
-        - **Valor Base do Banho:** R$ {plano_atual['valor_banho_un']:.2f}
+        - **Referência (Unitário Padrão):** R$ {plano_atual['avulso_un']:.2f}
         - **Frequência:** {frequencia}
         - **Duração Estimada:** {plano_atual['meses']} meses ({plano_atual['dias']} dias)
         
-        **✨ Extras de Beleza Inclusos:**
+        **✨ Extras de Beleza Inclusos com {int(plano_atual['desc_perc']*100)}% de desconto:**
         - {texto_extras}
         
-        **🛒 Consumo Incluso:**
+        **🛒 Consumo Incluso com {int(plano_atual['desc_perc']*100)}% de desconto:**
         - {texto_consumo_str}
         
         ---
-        ❌ Valor Avulso (Sem Clube): ~~R$ {plano_atual['avulso']:.2f}~~
-        ✅ **Valor no CLUBE04: R$ {plano_atual['final']:.2f}** *(Desconto aplicado de {int(plano_atual['desc_perc']*100)}%)*
+        ❌ Valor Total Avulso (Sem Clube): ~~R$ {plano_atual['total_avulso_geral']:.2f}~~
+        ✅ **VALOR NO CLUBE04 HOJE: R$ {plano_atual['total_clube_geral']:.2f}** *(Desconto aplicado de {int(plano_atual['desc_perc']*100)}%)*
         
         *Atendente: {vendedor}*
         """)
