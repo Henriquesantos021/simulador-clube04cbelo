@@ -35,7 +35,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # URL da Logo
-LOGO_URL = ""https://www.kalaes.com.br/22/wp-content/uploads/2023/08/CB04LOGO.png""
+LOGO_URL = "https://www.kalaes.com.br/22/wp-content/uploads/2023/08/CB04LOGO.png"
 
 # --- TABELAS DE PREÇOS UNITÁRIOS REAIS DO CLUBE04 ---
 precos_banho_avulso = {
