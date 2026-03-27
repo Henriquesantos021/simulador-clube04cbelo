@@ -214,7 +214,7 @@ with st.container():
         <div style="display: flex; align-items: center; margin-bottom: 20px;">
             <img src="{LOGO_URL}" width="70" style="margin-right: 15px;">
             <div>
-                <strong>CLUBE04 - Unidade Campo Belo</strong><br>
+                <strong>CLUBE04 - Unidade Granja Viana</strong><br>
                 <strong>Proposta exclusiva para o(a) doguinho {nome_pet}</strong>
             </div>
         </div>
