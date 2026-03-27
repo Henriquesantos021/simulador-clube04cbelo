@@ -38,27 +38,39 @@ st.markdown("""
 LOGO_URL = "https://www.kalaes.com.br/22/wp-content/uploads/2023/08/CB04LOGO.png"
 
 # --- TABELAS DE PREÇOS UNITÁRIOS REAIS DO CLUBE04 ---
+
+# --- TABELAS DE PREÇOS UNITÁRIOS REAIS DO CLUBE04 (AVULSO) ---
+
+# Tabela 1: Banhos (Avulso Unitário) - Atualizado 2026
 precos_banho_avulso = {
-    "Até 10 kg": {"Curto": 85.0, "Médio": 99.0, "Longo": 99.0},
-    "Até 20 kg": {"Curto": 105.0, "Médio": 139.0, "Longo": 139.0},
-    "Até 50 kg": {"Curto": 149.0, "Médio": 179.0, "Longo": 179.0},
-    "+ 50 kg": {"Curto": 239.0, "Médio": 279.0, "Longo": 279.0}
+    "Até 10 kg": {"Curto": 79.0, "Médio": 89.0, "Longo": 89.0},
+    "Até 20 kg": {"Curto": 99.0, "Médio": 129.0, "Longo": 129.0},
+    "Até 50 kg": {"Curto": 129.0, "Médio": 169.0, "Longo": 169.0},
+    "+ 50 kg": {"Curto": 219.0, "Médio": 259.0, "Longo": 259.0}
 }
 
-precos_tosa_avulso = { "Até 10 kg": 209.0, "Até 20 kg": 279.0, "Até 50 kg": 489.0, "+ 50 kg": 699.0 }
+# Tabela 1: Tosa (Avulso Unitário) - Atualizado 2026
+precos_tosa_avulso = {
+    "Até 10 kg": 194.0,
+    "Até 20 kg": 264.0,
+    "Até 50 kg": 454.0,
+    "+ 50 kg": 544.0
+}
 
+# Tabela 2: Máscaras (Avulso Unitário) - Atualizado 2026
 precos_mascaras_avulso = {
-    "Senses/Detox": {"Até 10 kg": 69.0, "Até 20 kg": 79.0, "Até 50 kg": 89.0, "+ 50 kg": 109.0},
-    "Luxo/Máx. Volume/Liso Intenso": {"Até 10 kg": 59.0, "Até 20 kg": 69.0, "Até 50 kg": 79.0, "+ 50 kg": 99.0},
-    "Argan": {"Até 10 kg": 49.0, "Até 20 kg": 59.0, "Até 50 kg": 69.0, "+ 50 kg": 89.0},
-    "Matização": {"Até 10 kg": 69.0, "Até 20 kg": 79.0, "Até 50 kg": 89.0, "+ 50 kg": 99.0}
+    "Senses/Detox": {"Até 10 kg": 59.0, "Até 20 kg": 69.0, "Até 50 kg": 79.0, "+ 50 kg": 89.0},
+    "Luxo/Máx. Volume/Liso Intenso": {"Até 10 kg": 49.0, "Até 20 kg": 59.0, "Até 50 kg": 69.0, "+ 50 kg": 79.0},
+    "Argan": {"Até 10 kg": 39.0, "Até 20 kg": 49.0, "Até 50 kg": 59.0, "+ 50 kg": 69.0},
+    "Matização": {"Até 10 kg": 59.0, "Até 20 kg": 69.0, "Até 50 kg": 79.0, "+ 50 kg": 89.0}
 }
 
+# Tabela 2: Adicionais (Avulso Unitário) - Atualizado 2026
 precos_adicionais_avulso = {
     "Remoção de Pelos Mortos": {"Até 10 kg": 79.0, "Até 20 kg": 89.0, "Até 50 kg": 99.0, "+ 50 kg": 109.0},
     "Tosa Higiênica": {"Até 10 kg": 39.0, "Até 20 kg": 49.0, "Até 50 kg": 59.0, "+ 50 kg": 69.0},
-    "Ozônio": {"Até 10 kg": 39.0, "Até 20 kg": 49.0, "Até 50 kg": 59.0, "+ 50 kg": 79.0},
-    "Desembolo": {"Até 10 kg": 99.0, "Até 20 kg": 149.0, "Até 50 kg": 189.0, "+ 50 kg": 299.0},
+    "Ozônio": {"Até 10 kg": 29.0, "Até 20 kg": 39.0, "Até 50 kg": 49.0, "+ 50 kg": 59.0},
+    "Desembolo": {"Até 10 kg": 79.0, "Até 20 kg": 109.0, "Até 50 kg": 159.0, "+ 50 kg": 259.0},
     "Extra Soft": {"Até 10 kg": 19.0, "Até 20 kg": 29.0, "Até 50 kg": 39.0, "+ 50 kg": 49.0},
     "X-treme (Limpeza Profunda)": {"Até 10 kg": 39.0, "Até 20 kg": 39.0, "Até 50 kg": 39.0, "+ 50 kg": 39.0}
 }
